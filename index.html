@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Skull Kid - Flash Game</title>
+    <style>
+        body {
+            margin: 0;
+            background-color: #000;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+        #flash-container {
+            width: 550px;  /* Standard resolution for Skull Kid */
+            height: 400px; 
+        }
+    </style>
+</head>
+<body>
+
+    <!-- ONLY ONE container element -->
+    <div id="flash-container"></div>
+
+    <!-- ONLY ONE script tag loading Ruffle from UNPKG -->
+    <script src="https://unpkg.com/@ruffle-rs/ruffle"></script>
+    
+    <!-- ONLY ONE script running the configuration logic -->
+    <script>
+        // 1. Tell the Ruffle browser extension not to double-inject itself
+        window.RufflePlayer = window.RufflePlayer || {};
+        window.RufflePlayer.config = {
+            "polyfillOptOut": true
+        };
+
+        // 2. Load the game safely after everything is ready
+        window.addEventListener("load", (event) => {
+            const ruffle = window.RufflePlayer.newest();
+            const player = ruffle.createPlayer();
+            const container = document.getElementById("flash-container");
+            container.appendChild(player);
+            
+            player.load("bad_dudes.swf"); 
+        });
+    </script>
+
+</body>
+</html>
